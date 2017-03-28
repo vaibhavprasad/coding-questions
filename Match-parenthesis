@@ -1,0 +1,49 @@
+/*
+Write a javascript code to match the parenthesis of a given expression. If the expression is correct then return true else return false;
+Input: "{{{{{[[[[((((({{{}}})))))]]]]}}}}}"
+Output: true
+*/
+
+//Solution Description: We are using a stack to track the braces. we iterate through the input string and find if there 
+are any opening brackets. when one is found, it is pushed into the stack. When a closing brace is found, we check if there top of the stack contains
+the matching opening brace and we pop it. otherwise we return a false. When the iterations is complete, we check the value of top it its back to its
+initialized value then return true.
+
+//Solution code
+
+var matchBrackets = function(str) {
+	var stack = [];
+	var top = -1;
+	for(var i = 0; i < str.length; i++) {
+		if(str[i] === '{' || str[i] === '(' || str[i] === '['){
+			stack.push(str[i]);
+			top++;
+		} else if(str[i] === '}') {
+			if(stack[top] === '{') {
+				stack.pop();
+				top--;
+			} else {
+				return false;
+			}
+		} else if(str[i] === ']') {
+			if(stack[top] === '[') {
+				stack.pop();
+				top--;
+			} else {
+				return false;
+			}
+		} else if(str[i] === ')') {
+			if(stack[top] === '(') {
+				stack.pop();
+				top--;
+			} else {
+				return false;
+			}
+		}
+	}
+	if(top === -1) {
+		return true;
+	}
+}
+
+console.log(matchBrackets("(()){{}}]"));
